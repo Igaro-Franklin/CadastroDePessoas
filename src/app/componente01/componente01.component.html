@@ -1,0 +1,60 @@
+<form [formGroup]="formulario">
+    
+    <!--Nome-->
+    @if (formulario.get('nome').hasError('required') && formulario.get('nome').touched) {
+        <p class="alert alert-warning">Preencha o nome</p>
+    }
+    @if (formulario.get('nome').hasError('minlength') && formulario.get('nome').touched) {
+        <p class="alert alert-warning">O nome precisa de no mínimo 3 caracteres</p>
+    }
+    <input type="text"    formControlName="nome"    placeholder="Nome"  class="form-control">
+    
+    <!--Idade-->
+    @if (formulario.get('idade').hasError('required') && formulario.get('idade').touched) {
+        <p class="alert alert-warning">Preencha a idade</p>
+    }
+    @if (formulario.get('idade').hasError('min') && formulario.get('idade').touched) {
+        <p class="alert alert-warning">A idade não pode ser menor que 0</p>
+    }
+    @if (formulario.get('idade').hasError('max') && formulario.get('idade').touched) {
+        <p class="alert alert-warning">A idade não pode ser maior que 120</p>
+    }
+    <input type="number"  formControlName="idade"   placeholder="Idade" class="form-control">
+    
+    <!--Email-->
+    @if (formulario.get('email').hasError('required') && formulario.get('email').touched) {
+        <p class="alert alert-warning">Preencha o email</p>
+    }
+    <input type="text"    formControlName="email"   placeholder="email" class="form-control">
+
+
+    @if (btnCadastrar) {
+        <input type="button" value="Cadastrar"  class="btn btn-success" (click)="cadastrar()" [disabled]="formulario.invalid">
+    }@else {
+        <input type="button" value="Alterar"    class="btn btn-primary" (click)="alterar()" [disabled]="formulario.invalid">
+        <input type="button" value="Excluir"    class="btn btn-danger" (click)="excluir()">
+        <input type="button" value="Cancelar"   class="btn btn-warning" (click)="cancelar()">
+    }
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Email</th>
+            <th>Selecionar</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let v of vetor; index as indice">
+            <td>{{ indice + 1}}</td>
+            <td>{{ v.nome }}</td>
+            <td>{{ v.idade }}</td>
+            <td>{{ v.email }}</td>
+            <td><button class="btn btn-secondary" (click)="selecionar(indice)">Selecionar</button></td>
+        </tr>
+    </tbody>
+</table>
